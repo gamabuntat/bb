@@ -29,7 +29,7 @@ const Carousel = ({ episodes = [] }: { episodes: Episode[] }): JSX.Element => {
     return calcMax();
   };
 
-  const validatePosition = (position) =>
+  const validatePosition = (position: number) =>
     Math.max(Math.min(position, 0), calcMax() || updateMax() || -Infinity);
 
   useEffect(() => {
