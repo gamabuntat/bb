@@ -1,27 +1,30 @@
 import { useEffect, useState } from 'react';
 import type { NextPage } from 'next';
 
-import Layout from 'src/components/Layout/Layout';
-import { getAllEpisodes, getCharacters } from 'src/api/api';
+import { getAllEpisodes } from 'src/api/api';
 import type { Episode } from 'src/api/types';
+import Layout from 'src/components/Layout/Layout';
+import Carousel from 'src/components/Carousel/Carousel';
 
-// import styles from 'src/styles/Home.module.css';
+import styles from 'src/styles/Home.module.sass';
 
 const Home: NextPage = () => {
-  const [episode, setEpisode] = useState([] as Episode[]);
+  const [episodes, setEpisode] = useState([] as Episode[][]);
 
   useEffect(() => {
-    getAllEpisodes()
-      .then((r) => {
-        return r;
-      })
-      .then((r) => getCharacters(r[0][0].characters))
-      .catch((error) => console.error(error));
+    getAllEpisodes().then(setEpisode);
   }, []);
 
   return (
     <Layout>
-      <div style={{ flex: 1 }}>{episode[0]?.episode}</div>
+      <main className={styles.Main}>
+        {episodes.map((ep) => (
+          <section key={ep[0].season}>
+            <h2 className={styles.SeasonTitle}>Season {ep[0].season}</h2>
+            <Carousel episodes={ep} />
+          </section>
+        ))}
+      </main>
     </Layout>
   );
 };
