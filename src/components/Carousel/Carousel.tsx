@@ -17,6 +17,7 @@ const Carousel = ({ episodes = [] }: { episodes: Episode[] }): JSX.Element => {
   const [carouselSize, setCarouselSize] = useState(0);
   const [containerSize, setContainerSize] = useState(0);
   const calcMax = () => carouselSize - containerSize;
+  const startPosition = useRef(0);
 
   const handleResizeWindow = () => {
     setCarouselSize(carousel.current?.getBoundingClientRect().width ?? 0);
@@ -27,6 +28,9 @@ const Carousel = ({ episodes = [] }: { episodes: Episode[] }): JSX.Element => {
     handleResizeWindow();
     return calcMax();
   };
+
+  const validatePosition = (position) =>
+    Math.max(Math.min(position, 0), calcMax() || updateMax() || -Infinity);
 
   useEffect(() => {
     window.addEventListener('resize', handleResizeWindow);
@@ -41,19 +45,27 @@ const Carousel = ({ episodes = [] }: { episodes: Episode[] }): JSX.Element => {
     toggleBinded(true);
     toggleIsScroll(false);
     setOffset(e.clientX - position);
+    startPosition.current = position;
   };
 
   const onPointerMove: React.PointerEventHandler<HTMLDivElement> = (e) => {
     if (isBinded) {
       e.preventDefault();
       toggleIsScroll(true);
-      setPosition(
-        Math.max(
-          Math.min(e.clientX - offset, 0),
-          calcMax() || updateMax() || -Infinity
-        )
-      );
+      setPosition(validatePosition(e.clientX - offset));
     }
+  };
+
+  const onLostPointerCapture: React.PointerEventHandler<HTMLDivElement> = (
+    e
+  ) => {
+    toggleBinded(false);
+    const extension = 200 * e.pressure;
+    setPosition(
+      validatePosition(
+        position + extension * (startPosition.current > position ? -1 : 1)
+      )
+    );
   };
 
   return (
@@ -62,9 +74,7 @@ const Carousel = ({ episodes = [] }: { episodes: Episode[] }): JSX.Element => {
       className={styles.Carousel}
       onPointerDown={onPointerDown}
       onPointerMove={onPointerMove}
-      onLostPointerCapture={() => {
-        toggleBinded(false);
-      }}
+      onLostPointerCapture={onLostPointerCapture}
     >
       <div
         ref={container}
