@@ -1,0 +1,30 @@
+@use 'styles/vars'
+
+.Carousel
+  display: flex
+  overflow: hidden
+  touch-action: none
+
+.Container
+  position: relative
+  display: flex
+  grid-gap: 30px
+  padding: 20px 1rem
+  width: min-content
+  transition: all .1s
+
+.Details
+  display: flex
+  flex-direction: column
+  justify-content: space-between
+  flex: 1
+  grid-gap: 1em
+
+  &Title
+    margin: 0
+    color: vars.$color-accent
+
+  &Container
+    margin-top: auto
+    display: flex
+    justify-content: space-between
