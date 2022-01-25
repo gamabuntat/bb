@@ -3,7 +3,7 @@ type NumberMap<T, K extends keyof T> = {
 };
 
 export type ResponseEpisode = {
-  id: number;
+  episode_id: number;
   title: string;
   season: string;
   episode: string;
@@ -15,7 +15,7 @@ export type ResponseEpisode = {
 export type Episode = NumberMap<ResponseEpisode, 'season' | 'episode'>;
 
 export type Character = {
-  id: number;
+  char_id: number;
   name: string;
   birthday: string;
   occupation: string[];

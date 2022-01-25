@@ -20,11 +20,17 @@ export const getAllEpisodes = () =>
       )
     );
 
-export const getCharacters = (characters: string[]) =>
+export const getEpisodeById = (id: string): Promise<Episode> =>
+  fetch(`${url}episodes/${id}`)
+    .then((r) => r.json())
+    .then((ep) => ep[0]);
+
+export const getCharacters = (characters: string[]): Promise<Character[]> =>
   Promise.all(
     characters.map((char) =>
       fetch(`${url}characters?name=${char.replace(/\s/g, '+')}`)
     )
   )
     .then((r) => Promise.all(r.map((response) => response.json())))
-    .then((r) => console.log(r[0][0]));
+    .then((chars) => chars.map((char) => char[0]))
+    .then((chars) => chars.filter((char) => char));
