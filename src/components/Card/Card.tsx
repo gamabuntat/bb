@@ -24,6 +24,8 @@ const Card = (
           height="220px"
           priority={false}
           objectFit="cover"
+          placeholder="blur"
+          blurDataURL="/noImg.webp"
         />
       </div>
       <div className={styles.Details}>{props.children}</div>
