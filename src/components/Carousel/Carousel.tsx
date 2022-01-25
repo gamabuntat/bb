@@ -52,7 +52,7 @@ const Carousel = ({ episodes = [] }: { episodes: Episode[] }): JSX.Element => {
     if (isBinded) {
       e.preventDefault();
       toggleIsScroll(true);
-      setPosition(e.clientX - offset);
+      setPosition(validatePosition(e.clientX - offset));
     }
   };
 
@@ -60,7 +60,6 @@ const Carousel = ({ episodes = [] }: { episodes: Episode[] }): JSX.Element => {
     HTMLDivElement
   > = () => {
     toggleBinded(false);
-    setPosition(validatePosition(position));
   };
 
   return (
