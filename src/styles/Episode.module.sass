@@ -1,0 +1,47 @@
+@use 'styles/vars'
+
+.Main
+  display: flex
+  flex-direction: column
+  flex: 1
+  padding: 20px
+  grid-gap: 1rem
+
+  &Fetching
+    justify-content: center
+    align-items: center
+    font-size: 7rem
+
+.Title
+  margin: 0
+  color: vars.$color-accent
+
+.SubTitle
+  margin: 0
+
+.Details
+  margin: 0
+  white-space: pre
+
+.Characters
+
+  &Container
+    display: flex
+    flex-wrap: wrap
+    grid-gap: 1rem
+
+  &Description
+    white-space: pre
+    font-size: 1rem
+    margin: 0
+
+  &Name
+    color: vars.$color-accent
+
+  &Another
+    white-space: pre-wrap
+    inline-size: min-content
+    overflow-wrap: break-word
+
+  &Info
+    font-weight: bold
