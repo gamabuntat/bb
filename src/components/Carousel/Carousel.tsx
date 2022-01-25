@@ -52,18 +52,17 @@ const Carousel = ({ episodes = [] }: { episodes: Episode[] }): JSX.Element => {
     if (isBinded) {
       e.preventDefault();
       toggleIsScroll(true);
-      setPosition(validatePosition(e.clientX - offset));
+      setPosition(e.clientX - offset);
     }
   };
 
-  const onLostPointerCapture: React.PointerEventHandler<HTMLDivElement> = (
-    e
-  ) => {
+  const onLostPointerCapture: React.PointerEventHandler<
+    HTMLDivElement
+  > = () => {
     toggleBinded(false);
-    const extension = 200 * e.pressure;
     setPosition(
       validatePosition(
-        position + extension * (startPosition.current > position ? -1 : 1)
+        position + 200 * (startPosition.current > position ? -1 : 1)
       )
     );
   };
