@@ -8,28 +8,30 @@ import Carousel from 'src/components/Carousel/Carousel';
 import styles from 'src/styles/Home.module.sass';
 
 const Home = ({ episodes }: { episodes: Episode[][] }) => {
-  return (
-    <Layout>
-      <main className={styles.Main}>
-        {episodes.map((ep) => (
-          <section key={ep[0].season}>
-            <h2 className={styles.SeasonTitle}>Season {ep[0].season}</h2>
-            <Carousel episodes={ep} />
-          </section>
-        ))}
-      </main>
-    </Layout>
-  );
+    return (
+        <Layout>
+            <main className={styles.Main}>
+                {episodes.map((ep) => (
+                    <section key={ep[0].season}>
+                        <h2 className={styles.SeasonTitle}>
+                            Season {ep[0].season}
+                        </h2>
+                        <Carousel episodes={ep} />
+                    </section>
+                ))}
+            </main>
+        </Layout>
+    );
 };
 
 export const getStaticProps: GetStaticProps = async () => {
-  const episodes = await getAllEpisodes();
+    const episodes = await getAllEpisodes();
 
-  return {
-    props: {
-      episodes,
-    },
-  };
-}
+    return {
+        props: {
+            episodes,
+        },
+    };
+};
 
 export default Home;
