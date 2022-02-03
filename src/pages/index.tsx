@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import type { NextPage } from 'next';
+import type { GetStaticProps } from 'next';
 
 import { getAllEpisodes } from 'src/api/api';
 import type { Episode } from 'src/api/types';
@@ -8,13 +7,7 @@ import Carousel from 'src/components/Carousel/Carousel';
 
 import styles from 'src/styles/Home.module.sass';
 
-const Home: NextPage = () => {
-  const [episodes, setEpisode] = useState([] as Episode[][]);
-
-  useEffect(() => {
-    getAllEpisodes().then(setEpisode);
-  }, []);
-
+const Home = ({ episodes }: { episodes: Episode[][] }) => {
   return (
     <Layout>
       <main className={styles.Main}>
@@ -28,5 +21,15 @@ const Home: NextPage = () => {
     </Layout>
   );
 };
+
+export const getStaticProps: GetStaticProps = async () => {
+  const episodes = await getAllEpisodes();
+
+  return {
+    props: {
+      episodes,
+    },
+  };
+}
 
 export default Home;
